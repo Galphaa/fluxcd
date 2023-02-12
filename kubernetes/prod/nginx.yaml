@@ -5,6 +5,7 @@ metadata:
   labels:
     app: nginx
   name: nginx
+  namepsace: default
 spec:
   replicas: 1
   selector:
