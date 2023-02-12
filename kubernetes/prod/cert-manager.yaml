@@ -1,0 +1,19 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: kube-system
+spec:
+  chart:
+    repository: https://charts.jetstack.io
+    name: cert-manager
+    namespace: kube-system
+    version: v1.8.0
+  values:
+    nameOverride: cert-manager
+    fullnameOverride: cert-manager
+    global:
+      leaderElection:
+        namespace: kube-system
+    installCRDs: true
