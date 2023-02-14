@@ -1,19 +1,25 @@
 ---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: jetstack
+  namespace: default
+spec:
+  interval: 1m
+  url: https://charts.jetstack.io
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: cert-manager
-  namespace: kube-system
+  namespace: cert-manager
 spec:
+  interval: 5m
   chart:
-    repository: https://charts.jetstack.io
-    name: cert-manager
-    namespace: kube-system
-    version: v1.8.0
-  values:
-    nameOverride: cert-manager
-    fullnameOverride: cert-manager
-    global:
-      leaderElection:
-        namespace: kube-system
-    installCRDs: true
+    spec:
+      chart: jetstack/cert-manager
+      version: 'v1.9.1'
+      sourceRef:
+        kind: HelmRepository
+        name: jetstack
+      interval: 1m
